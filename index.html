@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Aplikasi Kas</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4285F4">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; }
+    iframe { width: 100%; height: 100%; border: none; display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Attribut allow="geolocation" wajib agar lokasi diizinkan di iframe -->
+  <iframe src="https://script.google.com/macros/s/AKfycbzo_eCdMXdFR8NUf3Va2iOQb6Su2EieV1jXRFczykbGu8_6SYU6H5rMIEsR1OPKQc5l5g/exec" allow="geolocation"></iframe>
+
+  <script>
+    // Register Service Worker untuk standar PWA
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+
+    // Minta Izin Lokasi Otomatis saat pertama kali dibuka
+    window.addEventListener('load', () => {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => console.log('Lokasi diizinkan:', pos.coords),
+          (err) => console.warn('Akses lokasi ditolak:', err.message)
+        );
+      }
+    });
+  </script>
+</body>
+</html>
