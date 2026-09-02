@@ -3,57 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <title>Aplikasi Kas Mulazamah</title>
-
-  <!-- Preview WhatsApp & Open Graph -->
-  <meta property="og:title" content="Aplikasi Kas Mulazamah">
-  <meta property="og:description" content="Kas Mulazamah Ustadz Syukur">
-  <meta property="og:image" content="https://muhammadiqbalramadhan1201.github.io/kasmulazamah/preview.png">
-  <meta property="og:image:secure_url" content="https://muhammadiqbalramadhan1201.github.io/kasmulazamah/preview.png">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://muhammadiqbalramadhan1201.github.io/kasmulazamah/">
-
-  <!-- Meta Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Aplikasi Kas Mulazamah">
-  <meta name="twitter:description" content="Kas Mulazamah Ustadz Syukur">
-  <meta name="twitter:image" content="https://muhammadiqbalramadhan1201.github.io/Kasmulazamah/preview.png">
-
+  <title>Kas Mulazamah</title>
+  
+  <!-- Link ke Manifest -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4285F4">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
+  <!-- Icon untuk iOS -->
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <meta name="theme-color" content="#ffffff">
+  
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; }
-    iframe { width: 100%; height: 100%; border: none; display: block; }
+    /* Membuat iframe penuh tanpa margin */
+    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #ffffff; }
+    iframe { width: 100%; height: 100%; border: none; }
   </style>
 </head>
-
 <body>
 
-  <iframe
-    src="https://script.google.com/macros/s/AKfycbzo_eCdMXdFR8NUf3Va2iOQb6Su2EieV1jXRFczykbGu8_6SYU6H5rMIEsR1OPKQc5l5g/exec"
-    allow="geolocation">
-  </iframe>
-
+  <!-- Ganti dengan URL GAS Anda -->
+  <iframe src="https://script.google.com/macros/s/AKfycbzo_eCdMXdFR8NUf3Va2iOQb6Su2EieV1jXRFczykbGu8_6SYU6H5rMIEsR1OPKQc5l5g/exec"></iframe>
+  
   <script>
+    // Mendaftarkan Service Worker agar terdeteksi sebagai PWA murni
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('Service Worker terdaftar!', reg))
+          .catch(err => console.error('Gagal daftar Service Worker', err));
+      });
     }
-
-    window.addEventListener('load', () => {
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => console.log('Lokasi diizinkan:', pos.coords),
-          (err) => console.warn('Akses lokasi ditolak:', err.message)
-        );
-      }
-    });
   </script>
-
 </body>
 </html>
