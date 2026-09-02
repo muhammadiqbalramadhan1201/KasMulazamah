@@ -1,59 +1,23 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-  <title>Aplikasi Kas Mulazamah</title>
-
-  <!-- Preview WhatsApp & Open Graph -->
-  <meta property="og:title" content="Aplikasi Kas Mulazamah">
-  <meta property="og:description" content="Aplikasi Kas Mulazamah Ustadz Syukur Hafidzahullah">
-  <meta property="og:image" content="https://muhammadiqbalramadhan1201.github.io/KasMulazamah/preview.png">
-  <meta property="og:image:secure_url" content="https://muhammadiqbalramadhan1201.github.io/KasMulazamah/preview.png">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://muhammadiqbalramadhan1201.github.io/KasMulazamah/">
-
-  <!-- Meta Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Aplikasi Pegawai MAN">
-  <meta name="twitter:description" content="Sistem informasi dan layanan kepegawaian.">
-  <meta name="twitter:image" content="https://muhammadiqbalramadhan1201.github.io/KasMulazamah/preview.png">
-
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#4285F4">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #fff; }
-    iframe { width: 100%; height: 100%; border: none; display: block; }
-  </style>
-</head>
-
-<body>
-
-  <iframe
-    src="https://script.google.com/macros/s/AKfycbzo_eCdMXdFR8NUf3Va2iOQb6Su2EieV1jXRFczykbGu8_6SYU6H5rMIEsR1OPKQc5l5g/exec"
-    allow="geolocation">
-  </iframe>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
+{
+  "name": "Aplikasi Kas Mulazamah'",
+  "short_name": "KASMulazamah",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4285F4",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-
-    window.addEventListener('load', () => {
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => console.log('Lokasi diizinkan:', pos.coords),
-          (err) => console.warn('Akses lokasi ditolak:', err.message)
-        );
-      }
-    });
-  </script>
-
-</body>
-</html>
+  ]
+}
