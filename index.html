@@ -5,31 +5,204 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Kas Mulazamah</title>
   
-  <!-- Link ke Manifest -->
+  <!-- Link ke Manifest & iOS Icon -->
   <link rel="manifest" href="manifest.json">
-  <!-- Icon untuk iOS -->
   <link rel="apple-touch-icon" href="icon-192.png">
   <meta name="theme-color" content="#ffffff">
   
   <style>
-    /* Membuat iframe penuh tanpa margin */
-    body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #ffffff; }
-    iframe { width: 100%; height: 100%; border: none; }
+    /* Reset & layout utama */
+    body, html { 
+      margin: 0; 
+      padding: 0; 
+      height: 100%; 
+      overflow: hidden; 
+      background-color: #ffffff; 
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    iframe { 
+      width: 100%; 
+      height: 100%; 
+      border: none; 
+      z-index: 1; 
+      position: relative; 
+    }
+
+    /* Overlay latar belakang transparan */
+    #install-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 9998;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    #install-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Kotak modal pop-up di tengah */
+    #install-modal {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      text-align: center;
+      width: 85%;
+      max-width: 400px;
+      transform: scale(0.8);
+      transition: transform 0.4s ease;
+    }
+
+    #install-overlay.show #install-modal {
+      transform: scale(1);
+    }
+
+    /* Icon dan teks modal */
+    .app-icon-placeholder {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px auto;
+      background-color: #eee;
+      border-radius: 18px;
+      background-image: url('icon-192.png');
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    #install-modal h2 {
+      margin: 0 0 10px 0;
+      font-size: 22px;
+      color: #1c1e21;
+    }
+
+    #install-modal p {
+      margin: 0 0 25px 0;
+      font-size: 16px;
+      color: #606770;
+      line-height: 1.5;
+    }
+
+    /* Tombol aksi */
+    .action-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #btn-install {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    #btn-install:active {
+      background-color: #0056b3;
+    }
+
+    #btn-close {
+      background: none;
+      border: none;
+      color: #777;
+      font-size: 14px;
+      padding: 10px;
+      cursor: pointer;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Ganti dengan URL GAS Anda -->
-  <iframe src="https://script.google.com/macros/s/AKfycbzo_eCdMXdFR8NUf3Va2iOQb6Su2EieV1jXRFczykbGu8_6SYU6H5rMIEsR1OPKQc5l5g/exec"></iframe>
+  <!-- Iframe Aplikasi GAS -->
+  <iframe src="https://script.google.com/macros/s/AKfycbzo_eCdMXdFR8NUf3Va2iOQb6Su2EieV1jXRFczykbGu8_6SYU6H5rMIEsR1OPKQc5l5g/exec" allow="camera; microphone; geolocation"></iframe>
   
+  <!-- Structure Pop-up Modal Instalasi -->
+  <div id="install-overlay">
+    <div id="install-modal">
+      <div class="app-icon-placeholder"></div>
+      <h2>Install Kas Mulazamah</h2>
+      <p>Akses aplikasi ini lebih cepat dan mudah langsung dari layar utama HP Anda.</p>
+      
+      <div class="action-buttons">
+        <button id="btn-install">Tambahkan ke Layar Utama</button>
+        <button id="btn-close">Nanti Saja</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Mendaftarkan Service Worker agar terdeteksi sebagai PWA murni
+    // 1. Registrasi Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
           .then(reg => console.log('Service Worker terdaftar!', reg))
           .catch(err => console.error('Gagal daftar Service Worker', err));
       });
+    }
+
+    // 2. Logika Pop-up Modal Instalasi PWA
+    let deferredPrompt;
+    const installOverlay = document.getElementById('install-overlay');
+    const btnInstall = document.getElementById('btn-install');
+    const btnClose = document.getElementById('btn-close');
+
+    // Cek apakah aplikasi dibuka dalam mode Standalone (Sudah diinstal)
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone;
+
+    if (!isStandalone) {
+      window.addEventListener('beforeinstallprompt', (e) => {
+        // Cegah prompt default browser
+        e.preventDefault();
+        deferredPrompt = e;
+        
+        // Tampilkan modal custom
+        installOverlay.style.display = 'flex';
+        setTimeout(() => {
+          installOverlay.classList.add('show');
+        }, 10);
+      });
+    }
+
+    // Pemicu prompt instalasi asli browser
+    btnInstall.addEventListener('click', async () => {
+      hideModal();
+      
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`Respon pengguna: ${outcome}`);
+        deferredPrompt = null;
+      }
+    });
+
+    // Tombol penutup
+    btnClose.addEventListener('click', () => {
+      hideModal();
+    });
+
+    // Sembunyikan modal
+    function hideModal() {
+      installOverlay.classList.remove('show');
+      setTimeout(() => {
+        installOverlay.style.display = 'none';
+      }, 400);
     }
   </script>
 </body>
