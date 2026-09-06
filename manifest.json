@@ -1,6 +1,6 @@
 {
-  "name": "Aplikasi Kas Mulazamah'",
-  "short_name": "KASMulazamah",
+  "name": "Aplikasi Kas Mulazamah",
+  "short_name": "KAS Mulazamah",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
