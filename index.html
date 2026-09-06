@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -9,12 +10,14 @@
   <!-- PWA Manifest -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#007bff">
 
   <style>
-    /* ================================
+
+    /* =========================================
        RESET & LAYOUT UTAMA
-    ================================= */
+    ========================================= */
+
     html,
     body {
       margin: 0;
@@ -23,29 +26,47 @@
       height: 100%;
       overflow: hidden;
       background-color: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                   Roboto, Helvetica, Arial, sans-serif;
+
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
     }
 
-    /* ================================
-       IFRAME APLIKASI GAS
-    ================================= */
+
+    /* =========================================
+       IFRAME GOOGLE APPS SCRIPT
+    ========================================= */
+
     iframe {
       position: fixed;
+
       top: 0;
       left: 0;
+
       width: 100%;
       height: 100%;
+
       border: none;
+
       z-index: 1;
+
       display: block;
     }
 
-    /* ================================
+
+    /* =========================================
        TOMBOL REFRESH
-    ================================= */
+    ========================================= */
+
     #refresh-button {
+
       position: fixed;
+
       top: 12px;
       right: 12px;
 
@@ -55,11 +76,14 @@
       border: none;
       border-radius: 50%;
 
-      background: rgba(255, 255, 255, 0.95);
-      color: #333;
+      background: #007bff;
+
+      color: #ffffff;
 
       font-size: 27px;
+
       line-height: 42px;
+
       text-align: center;
 
       padding: 0;
@@ -70,32 +94,205 @@
       z-index: 9997;
 
       box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.20);
+        0 3px 10px rgba(0, 0, 0, 0.25);
 
       transition:
-        transform 0.15s ease,
-        background-color 0.15s ease;
+        background-color 0.2s ease,
+        transform 0.15s ease;
     }
+
+
+    /* Saat tombol ditekan */
 
     #refresh-button:active {
-      transform: rotate(180deg) scale(0.92);
-      background: #eeeeee;
+
+      background: #0056b3;
+
+      transform: scale(0.92);
     }
 
-    /* ================================
-       OVERLAY INSTALL PWA
-    ================================= */
-    #install-overlay {
-      display: none;
+
+    /* =========================================
+       ANIMASI IKON REFRESH
+    ========================================= */
+
+    #refresh-button.refreshing {
+
+      animation: rotateRefresh 0.8s linear infinite;
+    }
+
+
+    @keyframes rotateRefresh {
+
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+
+    }
+
+
+    /* =========================================
+       OVERLAY REFRESH
+    ========================================= */
+
+    #refresh-loading {
 
       position: fixed;
+
       top: 0;
       left: 0;
 
       width: 100%;
       height: 100%;
 
-      background-color: rgba(0, 0, 0, 0.7);
+      background:
+        rgba(255, 255, 255, 0.97);
+
+      z-index: 10000;
+
+      display: none;
+
+      justify-content: center;
+      align-items: center;
+
+      flex-direction: column;
+
+      text-align: center;
+    }
+
+
+    /* =========================================
+       KOTAK PESAN REFRESH
+    ========================================= */
+
+    .refresh-box {
+
+      width: calc(100% - 50px);
+
+      max-width: 360px;
+
+      background: #ffffff;
+
+      border-radius: 18px;
+
+      padding: 30px 20px;
+
+      box-sizing: border-box;
+
+      box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.18);
+
+      animation:
+        refreshBoxAppear 0.25s ease;
+    }
+
+
+    @keyframes refreshBoxAppear {
+
+      from {
+
+        opacity: 0;
+
+        transform: scale(0.92);
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform: scale(1);
+      }
+
+    }
+
+
+    /* =========================================
+       IKON LOADING
+    ========================================= */
+
+    .loading-icon {
+
+      width: 45px;
+      height: 45px;
+
+      margin: 0 auto 18px auto;
+
+      border:
+
+        4px solid #e5e5e5;
+
+      border-top:
+
+        4px solid #007bff;
+
+      border-radius: 50%;
+
+      animation:
+        loadingSpin 0.8s linear infinite;
+    }
+
+
+    @keyframes loadingSpin {
+
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+
+    }
+
+
+    /* =========================================
+       TEKS REFRESH
+    ========================================= */
+
+    .refresh-title {
+
+      font-size: 18px;
+
+      font-weight: 700;
+
+      color: #222222;
+
+      margin-bottom: 8px;
+    }
+
+
+    .refresh-subtitle {
+
+      font-size: 14px;
+
+      color: #777777;
+
+      line-height: 1.5;
+    }
+
+
+    /* =========================================
+       OVERLAY INSTALL PWA
+    ========================================= */
+
+    #install-overlay {
+
+      display: none;
+
+      position: fixed;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background-color:
+        rgba(0, 0, 0, 0.7);
 
       z-index: 9998;
 
@@ -104,20 +301,27 @@
 
       opacity: 0;
 
-      transition: opacity 0.4s ease;
+      transition:
+        opacity 0.4s ease;
 
       pointer-events: none;
     }
 
+
     #install-overlay.show {
+
       opacity: 1;
+
       pointer-events: auto;
     }
 
-    /* ================================
+
+    /* =========================================
        MODAL INSTALL
-    ================================= */
+    ========================================= */
+
     #install-modal {
+
       background: #ffffff;
 
       padding: 30px;
@@ -130,56 +334,75 @@
       text-align: center;
 
       width: 85%;
+
       max-width: 400px;
 
       transform: scale(0.8);
 
-      transition: transform 0.4s ease;
+      transition:
+        transform 0.4s ease;
 
       box-sizing: border-box;
     }
 
+
     #install-overlay.show #install-modal {
+
       transform: scale(1);
     }
 
-    /* ================================
+
+    /* =========================================
        ICON PWA
-    ================================= */
+    ========================================= */
+
     .app-icon-placeholder {
+
       width: 80px;
       height: 80px;
 
-      margin: 0 auto 20px auto;
+      margin:
+        0 auto 20px auto;
 
       background-color: #eee;
 
       border-radius: 18px;
 
-      background-image: url('icon-192.png');
+      background-image:
+        url('icon-192.png');
+
       background-size: cover;
+
       background-position: center;
 
       box-shadow:
         0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
-    /* ================================
+
+    /* =========================================
        JUDUL MODAL
-    ================================= */
+    ========================================= */
+
     #install-modal h2 {
-      margin: 0 0 10px 0;
+
+      margin:
+        0 0 10px 0;
 
       font-size: 22px;
 
       color: #1c1e21;
     }
 
-    /* ================================
+
+    /* =========================================
        DESKRIPSI MODAL
-    ================================= */
+    ========================================= */
+
     #install-modal p {
-      margin: 0 0 25px 0;
+
+      margin:
+        0 0 25px 0;
 
       font-size: 16px;
 
@@ -188,16 +411,23 @@
       line-height: 1.5;
     }
 
-    /* ================================
-       TOMBOL AKSI
-    ================================= */
+
+    /* =========================================
+       TOMBOL INSTALL
+    ========================================= */
+
     .action-buttons {
+
       display: flex;
+
       flex-direction: column;
+
       gap: 12px;
     }
 
+
     #btn-install {
+
       background-color: #007bff;
 
       color: white;
@@ -214,14 +444,23 @@
 
       cursor: pointer;
 
-      transition: background-color 0.2s;
+      transition:
+        background-color 0.2s;
     }
 
+
     #btn-install:active {
+
       background-color: #0056b3;
     }
 
+
+    /* =========================================
+       TOMBOL NANTI
+    ========================================= */
+
     #btn-close {
+
       background: none;
 
       border: none;
@@ -237,12 +476,15 @@
       text-decoration: none;
     }
 
-    /* ================================
-       HP
-    ================================= */
+
+    /* =========================================
+       TAMPILAN HP
+    ========================================= */
+
     @media (max-width: 600px) {
 
       #refresh-button {
+
         top: 10px;
         right: 10px;
 
@@ -250,22 +492,48 @@
         height: 38px;
 
         font-size: 25px;
+
         line-height: 38px;
       }
 
+
       #install-modal {
+
         width: 88%;
-        padding: 25px 20px;
+
+        padding:
+          25px 20px;
       }
+
+
+      .refresh-box {
+
+        width:
+          calc(100% - 40px);
+
+        padding:
+          28px 18px;
+      }
+
+
+      .refresh-title {
+
+        font-size: 17px;
+      }
+
     }
+
   </style>
 </head>
 
+
 <body>
 
-  <!-- =================================
+
+  <!-- =========================================
        APLIKASI GOOGLE APPS SCRIPT
-  ================================== -->
+  ========================================== -->
+
   <iframe
     id="app-frame"
     src="https://script.google.com/macros/s/AKfycbzo_eCdMXdFR8NUf3Va2iOQb6Su2EieV1jXRFczykbGu8_6SYU6H5rMIEsR1OPKQc5l5g/exec"
@@ -273,29 +541,60 @@
   </iframe>
 
 
-  <!-- =================================
+
+  <!-- =========================================
        TOMBOL REFRESH
-       ↻ = REFRESH SELURUH HALAMAN
-  ================================== -->
+  ========================================== -->
+
   <button
     id="refresh-button"
     type="button"
-    title="Refresh halaman"
-    aria-label="Refresh halaman">
+    title="Muat ulang aplikasi"
+    aria-label="Muat ulang aplikasi">
+
     ↻
+
   </button>
 
 
-  <!-- =================================
+
+  <!-- =========================================
+       OVERLAY SEDANG REFRESH
+  ========================================== -->
+
+  <div id="refresh-loading">
+
+    <div class="refresh-box">
+
+      <div class="loading-icon"></div>
+
+      <div class="refresh-title">
+        Sedang memuat ulang aplikasi...
+      </div>
+
+      <div class="refresh-subtitle">
+        Mohon tunggu sebentar.
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================
        POPUP INSTALL PWA
-  ================================== -->
+  ========================================== -->
+
   <div id="install-overlay">
 
     <div id="install-modal">
 
       <div class="app-icon-placeholder"></div>
 
-      <h2>Install Kas Mulazamah</h2>
+      <h2>
+        Install Kas Mulazamah
+      </h2>
 
       <p>
         Akses aplikasi ini lebih cepat dan mudah
@@ -304,12 +603,21 @@
 
       <div class="action-buttons">
 
-        <button id="btn-install" type="button">
+        <button
+          id="btn-install"
+          type="button">
+
           Tambahkan ke Layar Utama
+
         </button>
 
-        <button id="btn-close" type="button">
+
+        <button
+          id="btn-close"
+          type="button">
+
           Nanti Saja
+
         </button>
 
       </div>
@@ -319,110 +627,119 @@
   </div>
 
 
+
   <script>
 
-    /* =================================
+
+    /* =========================================
        TOMBOL REFRESH
-    ================================== */
+    ========================================== */
 
     const refreshButton =
-      document.getElementById('refresh-button');
-
-    refreshButton.addEventListener('click', function () {
-
-      /*
-       * Reload halaman induk.
-       * Karena iframe berada di dalam halaman ini,
-       * iframe juga akan dimuat ulang dari awal.
-       */
-      window.location.reload();
-
-    });
+      document.getElementById(
+        'refresh-button'
+      );
 
 
-    /* =================================
+    const refreshLoading =
+      document.getElementById(
+        'refresh-loading'
+      );
+
+
+    refreshButton.addEventListener(
+      'click',
+      function () {
+
+
+        /*
+         * Cegah klik berulang
+         */
+
+        if (
+          refreshButton.classList.contains(
+            'refreshing'
+          )
+        ) {
+
+          return;
+
+        }
+
+
+        /*
+         * Jalankan animasi tombol
+         */
+
+        refreshButton.classList.add(
+          'refreshing'
+        );
+
+
+        /*
+         * Tampilkan layar loading
+         */
+
+        refreshLoading.style.display =
+          'flex';
+
+
+        /*
+         * Beri sedikit waktu agar
+         * pesan terlihat sebelum reload.
+         */
+
+        setTimeout(
+          function () {
+
+            window.location.reload();
+
+          },
+          700
+        );
+
+      }
+    );
+
+
+
+    /* =========================================
        SERVICE WORKER
-    ================================== */
+    ========================================== */
 
-    if ('serviceWorker' in navigator) {
-
-      window.addEventListener('load', function () {
-
-        navigator.serviceWorker.register('sw.js')
-
-          .then(function (registration) {
-
-            console.log(
-              'Service Worker terdaftar!',
-              registration
-            );
-
-          })
-
-          .catch(function (error) {
-
-            console.error(
-              'Gagal daftar Service Worker',
-              error
-            );
-
-          });
-
-      });
-
-    }
-
-
-    /* =================================
-       LOGIKA INSTALL PWA
-    ================================== */
-
-    let deferredPrompt = null;
-
-    const installOverlay =
-      document.getElementById('install-overlay');
-
-    const btnInstall =
-      document.getElementById('btn-install');
-
-    const btnClose =
-      document.getElementById('btn-close');
-
-
-    /* Cek apakah sudah mode aplikasi */
-
-    const isStandalone =
-      window.matchMedia('(display-mode: standalone)').matches ||
-      window.navigator.standalone;
-
-
-    /* =================================
-       TAMPILKAN POPUP INSTALL
-    ================================== */
-
-    if (!isStandalone) {
+    if (
+      'serviceWorker'
+      in navigator
+    ) {
 
       window.addEventListener(
-        'beforeinstallprompt',
-        function (event) {
+        'load',
+        function () {
 
-          /*
-           * Cegah popup bawaan browser.
-           */
-          event.preventDefault();
+          navigator.serviceWorker
+            .register('sw.js')
 
-          deferredPrompt = event;
+            .then(
+              function (registration) {
 
-          /*
-           * Tampilkan popup custom.
-           */
-          installOverlay.style.display = 'flex';
+                console.log(
+                  'Service Worker terdaftar!',
+                  registration
+                );
 
-          setTimeout(function () {
+              }
+            )
 
-            installOverlay.classList.add('show');
+            .catch(
+              function (error) {
 
-          }, 10);
+                console.error(
+                  'Gagal daftar Service Worker',
+                  error
+                );
+
+              }
+            );
 
         }
       );
@@ -430,29 +747,124 @@
     }
 
 
-    /* =================================
+
+    /* =========================================
+       LOGIKA INSTALL PWA
+    ========================================== */
+
+    let deferredPrompt = null;
+
+
+    const installOverlay =
+      document.getElementById(
+        'install-overlay'
+      );
+
+
+    const btnInstall =
+      document.getElementById(
+        'btn-install'
+      );
+
+
+    const btnClose =
+      document.getElementById(
+        'btn-close'
+      );
+
+
+
+    /* =========================================
+       CEK MODE STANDALONE
+    ========================================== */
+
+    const isStandalone =
+
+      window.matchMedia(
+        '(display-mode: standalone)'
+      ).matches
+
+      ||
+
+      window.navigator.standalone;
+
+
+
+    /* =========================================
+       TAMPILKAN POPUP INSTALL
+    ========================================== */
+
+    if (!isStandalone) {
+
+      window.addEventListener(
+        'beforeinstallprompt',
+        function (event) {
+
+
+          /*
+           * Cegah popup bawaan browser
+           */
+
+          event.preventDefault();
+
+
+          deferredPrompt = event;
+
+
+          /*
+           * Tampilkan popup custom
+           */
+
+          installOverlay.style.display =
+            'flex';
+
+
+          setTimeout(
+            function () {
+
+              installOverlay.classList.add(
+                'show'
+              );
+
+            },
+            10
+          );
+
+        }
+      );
+
+    }
+
+
+
+    /* =========================================
        TOMBOL INSTALL
-    ================================== */
+    ========================================== */
 
     btnInstall.addEventListener(
       'click',
       async function () {
 
+
         hideModal();
+
 
         if (deferredPrompt) {
 
           deferredPrompt.prompt();
+
 
           try {
 
             const choiceResult =
               await deferredPrompt.userChoice;
 
+
             console.log(
               'Respon pengguna:',
               choiceResult.outcome
             );
+
 
           } catch (error) {
 
@@ -463,6 +875,7 @@
 
           }
 
+
           deferredPrompt = null;
 
         }
@@ -471,9 +884,10 @@
     );
 
 
-    /* =================================
+
+    /* =========================================
        TOMBOL NANTI SAJA
-    ================================== */
+    ========================================== */
 
     btnClose.addEventListener(
       'click',
@@ -485,23 +899,35 @@
     );
 
 
-    /* =================================
-       SEMBUNYIKAN MODAL
-    ================================== */
+
+    /* =========================================
+       SEMBUNYIKAN MODAL INSTALL
+    ========================================== */
 
     function hideModal() {
 
-      installOverlay.classList.remove('show');
 
-      setTimeout(function () {
+      installOverlay.classList.remove(
+        'show'
+      );
 
-        installOverlay.style.display = 'none';
 
-      }, 400);
+      setTimeout(
+        function () {
+
+          installOverlay.style.display =
+            'none';
+
+        },
+        400
+      );
 
     }
 
+
   </script>
+
 
 </body>
 </html>
+```
