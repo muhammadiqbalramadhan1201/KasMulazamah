@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 
 <html lang="id">
@@ -47,51 +48,79 @@
       display: block;
     }
 
+
     /* =================================
        TOMBOL REFRESH
+       KANAN BAWAH
     ================================= */
 
     #refresh-button {
-      position: fixed;
-      top: 12px;
-      right: 12px;
+      position: fixed !important;
 
-      width: 42px;
-      height: 42px;
+      right: 16px !important;
+      bottom: 16px !important;
 
-      border: none;
-      border-radius: 50%;
+      top: auto !important;
+      left: auto !important;
 
-      background: #007bff;
-      color: #ffffff;
+      width: 50px !important;
+      height: 50px !important;
 
-      font-size: 27px;
-      line-height: 42px;
-      text-align: center;
+      border: none !important;
+      border-radius: 50% !important;
 
-      padding: 0;
-      margin: 0;
+      background: #007bff !important;
+      color: #ffffff !important;
 
-      cursor: pointer;
-      z-index: 9997;
+      font-size: 30px !important;
+      font-family: Arial, sans-serif !important;
+      font-weight: normal !important;
+
+      line-height: 50px !important;
+      text-align: center !important;
+
+      padding: 0 !important;
+      margin: 0 !important;
+
+      cursor: pointer !important;
+
+      /* Sangat tinggi agar berada di atas iframe */
+      z-index: 2147483647 !important;
+
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
 
       box-shadow:
-        0 3px 10px rgba(0, 0, 0, 0.25);
+        0 4px 12px rgba(0, 0, 0, 0.30) !important;
+
+      -webkit-appearance: none !important;
+      appearance: none !important;
+
+      -webkit-tap-highlight-color: transparent;
 
       transition:
-        background-color 0.2s ease,
-        transform 0.15s ease;
+        transform 0.15s ease,
+        background-color 0.2s ease;
     }
+
 
     #refresh-button:active {
-      background: #0056b3;
-      transform: scale(0.92);
+      background: #0056b3 !important;
+      transform: scale(0.90) !important;
     }
 
-    /* Animasi refresh sederhana */
+
+    /* =================================
+       ANIMASI TOMBOL REFRESH
+    ================================= */
+
     #refresh-button.refreshing {
-      animation: refreshRotate 0.8s linear infinite;
+      animation:
+        refreshRotate 0.8s linear infinite;
+      pointer-events: none;
     }
+
 
     @keyframes refreshRotate {
       from {
@@ -103,21 +132,24 @@
       }
     }
 
+
     /* =================================
        OVERLAY REFRESH
     ================================= */
 
     #refresh-loading {
       position: fixed;
+
       top: 0;
       left: 0;
 
       width: 100%;
       height: 100%;
 
-      background: rgba(255, 255, 255, 0.97);
+      background:
+        rgba(255, 255, 255, 0.97);
 
-      z-index: 10000;
+      z-index: 2147483646;
 
       display: none;
 
@@ -128,6 +160,7 @@
 
       text-align: center;
     }
+
 
     /* =================================
        KOTAK PESAN REFRESH
@@ -152,6 +185,7 @@
         refreshBoxAppear 0.25s ease;
     }
 
+
     @keyframes refreshBoxAppear {
       from {
         opacity: 0;
@@ -164,6 +198,7 @@
       }
     }
 
+
     /* =================================
        LOADING
     ================================= */
@@ -175,13 +210,16 @@
       margin: 0 auto 18px auto;
 
       border: 4px solid #e5e5e5;
-      border-top: 4px solid #007bff;
+
+      border-top:
+        4px solid #007bff;
 
       border-radius: 50%;
 
       animation:
         loadingSpin 0.8s linear infinite;
     }
+
 
     @keyframes loadingSpin {
       from {
@@ -193,18 +231,26 @@
       }
     }
 
+
     .refresh-title {
       font-size: 18px;
+
       font-weight: 700;
+
       color: #222222;
+
       margin-bottom: 8px;
     }
 
+
     .refresh-subtitle {
       font-size: 14px;
+
       color: #777777;
+
       line-height: 1.5;
     }
+
 
     /* =================================
        POPUP INSTALL PWA
@@ -214,6 +260,7 @@
       display: none;
 
       position: fixed;
+
       top: 0;
       left: 0;
 
@@ -236,10 +283,12 @@
       pointer-events: none;
     }
 
+
     #install-overlay.show {
       opacity: 1;
       pointer-events: auto;
     }
+
 
     /* =================================
        MODAL INSTALL
@@ -268,9 +317,11 @@
       box-sizing: border-box;
     }
 
+
     #install-overlay.show #install-modal {
       transform: scale(1);
     }
+
 
     /* =================================
        ICON PWA
@@ -297,6 +348,7 @@
         0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
+
     /* =================================
        JUDUL INSTALL
     ================================= */
@@ -309,6 +361,7 @@
 
       color: #1c1e21;
     }
+
 
     /* =================================
        DESKRIPSI INSTALL
@@ -325,15 +378,19 @@
       line-height: 1.5;
     }
 
+
     /* =================================
        TOMBOL INSTALL
     ================================= */
 
     .action-buttons {
       display: flex;
+
       flex-direction: column;
+
       gap: 12px;
     }
+
 
     #btn-install {
       background-color: #007bff;
@@ -356,9 +413,11 @@
         background-color 0.2s;
     }
 
+
     #btn-install:active {
       background-color: #0056b3;
     }
+
 
     #btn-close {
       background: none;
@@ -374,6 +433,7 @@
       cursor: pointer;
     }
 
+
     /* =================================
        HP
     ================================= */
@@ -381,14 +441,19 @@
     @media (max-width: 600px) {
 
       #refresh-button {
-        top: 10px;
-        right: 10px;
+        right: 14px !important;
+        bottom: 14px !important;
 
-        width: 38px;
-        height: 38px;
+        width: 48px !important;
+        height: 48px !important;
 
-        font-size: 25px;
-        line-height: 38px;
+        min-width: 48px !important;
+        min-height: 48px !important;
+
+        max-width: 48px !important;
+        max-height: 48px !important;
+
+        font-size: 28px !important;
       }
 
       #install-modal {
@@ -412,6 +477,7 @@
 
 <body>
 
+
   <!-- =================================
        APLIKASI GOOGLE APPS SCRIPT
   ================================== -->
@@ -422,16 +488,21 @@
     allow="camera; microphone; geolocation">
   </iframe>
 
+
   <!-- =================================
        TOMBOL REFRESH
   ================================== -->
 
-<button
- id="refresh-button"
- type="button"
- title="Muat ulang aplikasi"
- aria-label="Muat ulang aplikasi">
-↻ </button>
+  <button
+    id="refresh-button"
+    type="button"
+    title="Muat ulang aplikasi"
+    aria-label="Muat ulang aplikasi">
+
+    ↻
+
+  </button>
+
 
   <!-- =================================
        PESAN REFRESH
@@ -439,21 +510,22 @@
 
   <div id="refresh-loading">
 
-<div class="refresh-box">
+    <div class="refresh-box">
 
-  <div class="loading-icon"></div>
+      <div class="loading-icon"></div>
 
-  <div class="refresh-title">
-    Sedang memuat ulang aplikasi...
+      <div class="refresh-title">
+        Sedang memuat ulang aplikasi...
+      </div>
+
+      <div class="refresh-subtitle">
+        Mohon tunggu sebentar.
+      </div>
+
+    </div>
+
   </div>
 
-  <div class="refresh-subtitle">
-    Mohon tunggu sebentar.
-  </div>
-
-</div>
-
-  </div>
 
   <!-- =================================
        POPUP INSTALL PWA
@@ -461,42 +533,46 @@
 
   <div id="install-overlay">
 
-```
-<div id="install-modal">
+    <div id="install-modal">
 
-  <div class="app-icon-placeholder"></div>
+      <div class="app-icon-placeholder"></div>
 
-  <h2>
-    Install Kas Mulazamah
-  </h2>
+      <h2>
+        Install Kas Mulazamah
+      </h2>
 
-  <p>
-    Akses aplikasi ini lebih cepat dan mudah
-    langsung dari layar utama HP Anda.
-  </p>
+      <p>
+        Akses aplikasi ini lebih cepat dan mudah
+        langsung dari layar utama HP Anda.
+      </p>
 
-  <div class="action-buttons">
+      <div class="action-buttons">
 
-    <button
-      id="btn-install"
-      type="button">
-      Tambahkan ke Layar Utama
-    </button>
+        <button
+          id="btn-install"
+          type="button">
 
-    <button
-      id="btn-close"
-      type="button">
-      Nanti Saja
-    </button>
+          Tambahkan ke Layar Utama
+
+        </button>
+
+        <button
+          id="btn-close"
+          type="button">
+
+          Nanti Saja
+
+        </button>
+
+      </div>
+
+    </div>
 
   </div>
 
-</div>
-```
-
-  </div>
 
   <script>
+
 
     /* =================================
        TOMBOL REFRESH
@@ -507,41 +583,57 @@
         'refresh-button'
       );
 
+
     const refreshLoading =
       document.getElementById(
         'refresh-loading'
       );
 
+
     let refreshing = false;
+
 
     refreshButton.addEventListener(
       'click',
       function () {
 
+
         /* Cegah klik berkali-kali */
+
         if (refreshing) {
           return;
         }
 
+
         refreshing = true;
 
+
         /* Animasi tombol */
+
         refreshButton.classList.add(
           'refreshing'
         );
 
-        /* Tampilkan pesan penuh layar */
+
+        /* Tampilkan kotak loading */
+
         refreshLoading.style.display =
           'flex';
 
+
         /*
-         * Tunggu sebentar supaya
-         * pesan terlihat jelas,
-         * kemudian reload halaman.
+         * Tunggu 700ms agar pesan
+         * sempat terlihat.
          */
 
         setTimeout(
           function () {
+
+            /*
+             * Reload seluruh halaman.
+             * Ini akan memuat kembali
+             * iframe dan mengambil data terbaru.
+             */
 
             window.location.reload();
 
@@ -602,15 +694,18 @@
 
     let deferredPrompt = null;
 
+
     const installOverlay =
       document.getElementById(
         'install-overlay'
       );
 
+
     const btnInstall =
       document.getElementById(
         'btn-install'
       );
+
 
     const btnClose =
       document.getElementById(
@@ -745,3 +840,4 @@
 
 </body>
 </html>
+```
